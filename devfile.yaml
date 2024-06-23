@@ -9,14 +9,8 @@ components:
     type: dockerimage
     alias: rsync
     image: 'quay.io/fbenoit/rsync-simple:latest'
-  - id: che-incubator/typescript/latest
-    memoryLimit: 512Mi
-    type: chePlugin
   - mountSources: true
-    endpoints:
-      - name: nodejs
-        port: 3000
     memoryLimit: 1Gi
     type: dockerimage
-    alias: nodejs
-    image: 'quay.io/eclipse/che-nodejs10-community:nightly'  
+    alias: java8
+    image: 'quay.io/eclipse/che-java8-maven:latest'  
