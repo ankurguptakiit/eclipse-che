@@ -1,0 +1,11 @@
+apiVersion: 1.0.0
+metadata:
+  name: remote-project
+attributes:
+  persistVolumes: 'false'
+components:
+  - mountSources: true
+    memoryLimit: 512Mi
+    type: dockerimage
+    alias: rsync
+    image: 'quay.io/fbenoit/rsync-simple:latest'
