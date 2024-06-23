@@ -1,37 +1,19 @@
-schemaVersion: 2.2.0
+apiVersion: 1.0.0
 metadata:
   name: remote-project
-  namespace: admin-che
 attributes:
-  controller.devfile.io/devworkspace-config:
-    name: devworkspace-config
-    namespace: eclipse-che
-  controller.devfile.io/storage-type: per-user
-  dw.metadata.annotations:
-    che.eclipse.org/devfile-source: |
-      url:
-        location: https://192.168.49.2.nip.io/dashboard/devfile-registry/devfiles/empty.yaml
-      factory:
-        params: >-
-          che-editor=che-incubator/che-idea/next&storageType=per-user&url=https://192.168.49.2.nip.io/dashboard/devfile-registry/devfiles/empty.yaml
+  persistVolumes: 'false'
 components:
-  - container:
-      env:
-        - name: CHE_DASHBOARD_URL
-          value: https://192.168.49.2.nip.io
-        - name: CHE_PLUGIN_REGISTRY_URL
-          value: https://192.168.49.2.nip.io/plugin-registry/v3
-        - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
-          value: http://plugin-registry.eclipse-che.svc:8080/v3
-        - name: OPENVSX_REGISTRY_URL
-          value: https://open-vsx.org
-      image: quay.io/devfile/universal-developer-image:ubi8-latest
-      sourceMapping: /projects
-    name: universal-developer-image
-  - container:
-      image: quay.io/fbenoit/rsync-simple:latest
-      alias: rsync
-      mountSources: true
-      memoryLimit: 512Mi
-    name: rsync
-  
+  - id: che-incubator/che-idea/next
+    memoryLimit: 2048Mi
+    type: chePlugin
+  - mountSources: true
+    memoryLimit: 2Gi
+    type: dockerimage
+    alias: universal-developer-image
+    image: 'quay.io/devfile/universal-developer-image'
+  - mountSources: true
+    memoryLimit: 512Mi
+    type: dockerimage
+    alias: rsync
+    image: 'quay.io/fbenoit/rsync-simple:latest'
