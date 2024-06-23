@@ -1,27 +1,37 @@
-apiVersion: 1.0.0
+schemaVersion: 2.2.0
 metadata:
   name: remote-project
+  namespace: admin-che
 attributes:
-  persistVolumes: 'false'
+  controller.devfile.io/devworkspace-config:
+    name: devworkspace-config
+    namespace: eclipse-che
+  controller.devfile.io/storage-type: per-user
+  dw.metadata.annotations:
+    che.eclipse.org/devfile-source: |
+      url:
+        location: https://192.168.49.2.nip.io/dashboard/devfile-registry/devfiles/empty.yaml
+      factory:
+        params: >-
+          che-editor=che-incubator/che-idea/next&storageType=per-user&url=https://192.168.49.2.nip.io/dashboard/devfile-registry/devfiles/empty.yaml
 components:
-  - mountSources: true
-    memoryLimit: 512Mi
-    type: dockerimage
-    alias: rsync
-    image: 'quay.io/fbenoit/rsync-simple:latest'
-  - mountSources: true
-    memoryLimit: 1Gi
-    type: dockerimage
-    alias: java8
-    image: 'quay.io/eclipse/che-java8-maven:7.37.2'
-  - id: che-incubator/typescript/latest
-    memoryLimit: 512Mi
-    type: chePlugin
-  - mountSources: true
-    endpoints:
-      - name: nodejs
-        port: 3000
-    memoryLimit: 1Gi
-    type: dockerimage
-    alias: nodejs
-    image: 'quay.io/eclipse/che-nodejs12-community:7.37.2'  
+  - container:
+      env:
+        - name: CHE_DASHBOARD_URL
+          value: https://192.168.49.2.nip.io
+        - name: CHE_PLUGIN_REGISTRY_URL
+          value: https://192.168.49.2.nip.io/plugin-registry/v3
+        - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
+          value: http://plugin-registry.eclipse-che.svc:8080/v3
+        - name: OPENVSX_REGISTRY_URL
+          value: https://open-vsx.org
+      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      sourceMapping: /projects
+    name: universal-developer-image
+  - container:
+      image: quay.io/fbenoit/rsync-simple:latest
+      alias: rsync
+      mountSources: true
+      memoryLimit: 512Mi
+    name: rsync
+  
