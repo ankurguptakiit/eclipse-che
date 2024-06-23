@@ -13,4 +13,4 @@ components:
     memoryLimit: 1Gi
     type: dockerimage
     alias: java8
-    image: 'quay.io/eclipse/che-java8-maven:latest'  
+    image: 'quay.io/eclipse/che-java8-maven:7.37.2'  
