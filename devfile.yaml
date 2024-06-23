@@ -13,4 +13,15 @@ components:
     memoryLimit: 1Gi
     type: dockerimage
     alias: java8
-    image: 'quay.io/eclipse/che-java8-maven:7.37.2'  
+    image: 'quay.io/eclipse/che-java8-maven:7.37.2'
+  - id: che-incubator/typescript/latest
+    memoryLimit: 512Mi
+    type: chePlugin
+  - mountSources: true
+    endpoints:
+      - name: nodejs
+        port: 3000
+    memoryLimit: 1Gi
+    type: dockerimage
+    alias: nodejs
+    image: 'quay.io/eclipse/che-nodejs12-community:7.37.2'  
