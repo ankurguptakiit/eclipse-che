@@ -4,6 +4,9 @@ metadata:
 attributes:
   persistVolumes: 'false'
 components:
+  - id: che-incubator/che-idea/latest
+    memoryLimit: 2048Mi
+    type: chePlugin
   - mountSources: true
     memoryLimit: 2Gi
     type: dockerimage
